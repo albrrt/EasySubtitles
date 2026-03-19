@@ -44,7 +44,9 @@ namespace EasySubtitles
         private void Parse(string subfile)
         {
             // Split the file into blocks of index, time and text
-            var sublines = subfile.Split(new[] { Environment.NewLine + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+           var sublines = Regex.Split(subfile, @"\r?\n\r?\n")
+                              .Where(s => !string.IsNullOrWhiteSpace(s))
+                              .ToArray();
             
             foreach (var line in sublines)
             {
